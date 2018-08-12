@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "983068458116",
+    "firebase_url": "https://golpea-la-patata.firebaseio.com",
+    "project_id": "golpea-la-patata",
+    "storage_bucket": "golpea-la-patata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983068458116:android:400d031afb07cda4",
+        "android_client_info": {
+          "package_name": "com.potato.rv.rvpotato"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983068458116-j4upqgbdqt3rrv4gmmcd7k47jseq2gih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.potato.rv.rvpotato",
+            "certificate_hash": "32efe966823ba741ffaa0f83eace59e1e0e51af0"
+          }
+        },
+        {
+          "client_id": "983068458116-061es8l55v2moduq46i86qh13c09qq5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDudIkbew4ari6A5_OpV1Q15PAGYztZu9A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983068458116-061es8l55v2moduq46i86qh13c09qq5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
