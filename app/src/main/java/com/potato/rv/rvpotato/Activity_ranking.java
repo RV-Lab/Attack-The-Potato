@@ -23,7 +23,7 @@ public class Activity_ranking extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     ProgressDialog progressDoalog;
-
+    ///
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
