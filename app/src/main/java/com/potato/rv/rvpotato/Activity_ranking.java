@@ -29,7 +29,6 @@ public class Activity_ranking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
-        MobileAds.initialize(this, "ca-app-pub-1008782396803681~2515099854");
 
         progressDoalog = new ProgressDialog(this);
         progressDoalog.setTitle("Loading ranking");
@@ -60,10 +59,6 @@ public class Activity_ranking extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         //progressDoalog.dismiss();
-
-        AdView mAdView = (AdView) findViewById(R.id.anuncioranking);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
 
     }
