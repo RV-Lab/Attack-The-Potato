@@ -221,7 +221,6 @@ public class Juego_Aleatorio extends AppCompatActivity {
             toast.show();
 */
         patata_aleatorio.setClickable(false);
-        contenedorpatata.setVisibility(View.GONE);
         dialogo(cronometro.getText().toString());
 
     }
