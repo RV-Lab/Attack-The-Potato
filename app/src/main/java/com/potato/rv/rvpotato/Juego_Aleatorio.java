@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.SystemClock;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -178,7 +180,7 @@ public class Juego_Aleatorio extends AppCompatActivity {
                     contador_clicks.setTextColor(Color.parseColor("#FF8000"));
                 }
                 if(contador==maximo) {
-                    terminado();
+                    terminado(view);
                     //patata.setImageResource(R.drawable.muerta);
                     contador_clicks.setTextColor(Color.parseColor("#DF0101"));
                 }
@@ -212,7 +214,7 @@ public class Juego_Aleatorio extends AppCompatActivity {
         cronometro.stop();
     }
 
-    public void terminado(){
+    public void terminado(View view){
         parar_cronometro();
         int elapsedMillis = (int) (SystemClock.elapsedRealtime() - cronometro.getBase());
 /*
@@ -221,35 +223,39 @@ public class Juego_Aleatorio extends AppCompatActivity {
             toast.show();
 */
         patata_aleatorio.setClickable(false);
-        dialogo(cronometro.getText().toString());
+        dialogo(view,cronometro.getText().toString());
 
     }
 
 
-    public void dialogo (String tiempo){
-        final EditText nombre_record = new EditText(this);
-        final AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setTitle("Game Completed ");
-        builder1.setMessage("Time: "+tiempo +"\nEnter your name: ");
-        builder1.setView(nombre_record);
-        builder1.setCancelable(true);
-        builder1.setPositiveButton(
-                "GO",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        //coger datos editext y mandarlo
+    public void dialogo(View view,String tiempo) {
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Juego_Aleatorio.this);
+        builder.setCancelable(false);
+        LayoutInflater inflater = Juego_Aleatorio.this.getLayoutInflater();
+        view = inflater.inflate(R.layout.dialogo, null);
+        builder.setView(view);
+        final AlertDialog alert = builder.create();
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //boton
+        final EditText nombre_record = view.findViewById(R.id.name);
+        final TextView time = view.findViewById(R.id.time);
+        time.setText("Time: " + tiempo);
+        ImageButton ir = view.findViewById(R.id.boton_go);
+
+        ir.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
                         modificar_record(nombre_record.getText().toString());
+                        patata_aleatorio.setVisibility(View.INVISIBLE);
                         ranking.setVisibility(View.VISIBLE);
                         retry.setVisibility(View.VISIBLE);
-
-
+                        alert.dismiss();
                     }
-                });
-        AlertDialog alert11 = builder1.create();
-        alert11.setCanceledOnTouchOutside(false);
-        alert11.show();
-
+                }
+        );
+        alert.show();
     }
 
 

@@ -2,23 +2,23 @@ package com.potato.rv.rvpotato;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.SystemClock;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +33,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import com.google.android.gms.ads.MobileAds;
+import java.util.zip.Inflater;
+
 public class patata extends AppCompatActivity {
 
     ImageView patata;
@@ -52,7 +52,7 @@ public class patata extends AppCompatActivity {
     private ValueEventListener eventListener;
     private ArrayList<Jugador> jugadores = null;
     private InterstitialAd mInterstitialAd;
-
+    private String nombre;
     int soundId;
     SoundPool sp;
     //
@@ -149,7 +149,7 @@ public class patata extends AppCompatActivity {
                     contador_clicks.setTextColor(Color.parseColor("#FF8000"));
                 }
                 if(contador==maximo) {
-                    terminado();
+                    terminado(view);
                     patata.setImageResource(R.drawable.muerta);
                     contador_clicks.setTextColor(Color.parseColor("#DF0101"));
 
@@ -180,7 +180,7 @@ public class patata extends AppCompatActivity {
         cronometro.stop();
     }
 
-    public void terminado(){
+    public void terminado(View view){
         parar_cronometro();
         int elapsedMillis = (int) (SystemClock.elapsedRealtime() - cronometro.getBase());
 /*
@@ -189,11 +189,40 @@ public class patata extends AppCompatActivity {
             toast.show();
 */
         patata.setClickable(false);
-        dialogo(cronometro.getText().toString());
+        dialogo(view,cronometro.getText().toString());
 
     }
 
+    public void dialogo(View view,String tiempo) {
 
+        final AlertDialog.Builder builder = new AlertDialog.Builder(patata.this);
+        builder.setCancelable(false);
+        LayoutInflater inflater = patata.this.getLayoutInflater();
+        view = inflater.inflate(R.layout.dialogo, null);
+        builder.setView(view);
+        final AlertDialog alert = builder.create();
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //boton
+        final EditText nombre_record = view.findViewById(R.id.name);
+        final TextView time = view.findViewById(R.id.time);
+        time.setText("Time: " + tiempo);
+        ImageButton ir = view.findViewById(R.id.boton_go);
+
+        ir.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        modificar_record(nombre_record.getText().toString());
+                        ranking.setVisibility(View.VISIBLE);
+                        retry.setVisibility(View.VISIBLE);
+                        alert.dismiss();
+                    }
+                }
+        );
+        alert.show();
+    }
+
+/*
     public void dialogo (String tiempo){
         final EditText nombre_record = new EditText(this);
         final AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -219,7 +248,7 @@ public class patata extends AppCompatActivity {
         alert11.show();
 
     }
-
+*/
 
     public void modificar_record(final String nombre){
 
