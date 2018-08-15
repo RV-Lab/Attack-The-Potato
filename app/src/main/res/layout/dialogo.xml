@@ -41,7 +41,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo_dialogo" />
+        app:layout_constraintTop_toBottomOf="@+id/titulo_dialogo"
+        tools:ignore="UnknownId" />
 
 
     <ImageButton
@@ -68,8 +69,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
+        android:maxEms="12"
         android:backgroundTint="#e4d54e"
-        android:ems="10"
+        android:ems="12"
         android:hint="Name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
