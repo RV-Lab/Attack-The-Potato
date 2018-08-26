@@ -6,13 +6,42 @@
     android:layout_height="match_parent"
     tools:context="com.potato.rv.rvpotato.patata">
 
-    <TextView
-        android:id="@+id/text_contador"
-        android:layout_width="138dp"
-        android:layout_height="79dp"
-        android:layout_marginBottom="16dp"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_cesped"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
+
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/anunciopatata"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="ca-app-pub-1008782396803681/6276458880"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></com.google.android.gms.ads.AdView>
+
+    <TextView
+        android:id="@+id/text_contador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="57dp"
         android:layout_marginTop="8dp"
         android:text="0"
         android:textAlignment="center"
@@ -78,17 +107,6 @@
         app:layout_constraintVertical_bias="0.85"
         app:srcCompat="@drawable/miniretry" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/fondo_cesped"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints">
-
-    </LinearLayout>
-
     <ImageView
         android:id="@+id/patata"
         android:layout_width="316dp"
@@ -104,21 +122,6 @@
         app:srcCompat="@drawable/alegre"
         tools:ignore="UnknownId" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/anunciopatata"
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:adSize="SMART_BANNER"
-        app:adUnitId="ca-app-pub-1008782396803681/6276458880"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"></com.google.android.gms.ads.AdView>
+
 
 </android.support.constraint.ConstraintLayout>

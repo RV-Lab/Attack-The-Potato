@@ -31,7 +31,6 @@ public class Top10 extends Fragment{
     private DatabaseReference mibd;
     private ValueEventListener eventListener;
     private ArrayList<Jugador> jugadores = null;
-    private FloatingActionButton top_permanente;
     View v;
 
 
@@ -44,15 +43,8 @@ public class Top10 extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        top_permanente = (FloatingActionButton) v.findViewById(R.id.boton_top);
         mibd = FirebaseDatabase.getInstance().getReference();
         jugadores = new ArrayList<Jugador>();
-
-        top_permanente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
 
         eventListener = new ValueEventListener() {
             @Override
@@ -73,7 +65,6 @@ public class Top10 extends Fragment{
             }
         };
         mibd.addValueEventListener(eventListener);
-
     }
 
 

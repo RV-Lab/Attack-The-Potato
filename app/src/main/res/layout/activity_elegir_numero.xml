@@ -24,8 +24,8 @@
 
     <ImageButton
         android:id="@+id/boton_10"
-        android:layout_width="212dp"
-        android:layout_height="94dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -57,8 +57,8 @@
 
     <TextView
         android:id="@+id/textonumero"
-        android:layout_width="253dp"
-        android:layout_height="53dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

@@ -32,15 +32,19 @@ public class Top100 extends Fragment{
     private ArrayList<Jugador> jugadores = null;
     View v;
 
+
     public Top100() {
         // Required empty public constructor
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mibd = FirebaseDatabase.getInstance().getReference();
         jugadores = new ArrayList<Jugador>();
+
         eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

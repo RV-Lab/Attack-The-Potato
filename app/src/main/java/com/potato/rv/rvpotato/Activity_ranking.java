@@ -69,10 +69,9 @@ public class Activity_ranking extends AppCompatActivity {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new Top10(), "10");
-        adapter.addFragment(new Top100(), "100");
+        adapter.addFragment(new Top10(), "Top10");
+        adapter.addFragment(new Top100(), "Top100");
         adapter.addFragment(new TopAleatorio(), "Aleatorio");
-        //adapter.addFragment(new TopPermanente(), "Ranking");
 
 
         viewPager.setAdapter(adapter);
