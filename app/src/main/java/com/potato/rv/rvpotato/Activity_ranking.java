@@ -9,13 +9,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 
 public class Activity_ranking extends AppCompatActivity {
 
@@ -29,6 +26,7 @@ public class Activity_ranking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
+
 
         progressDoalog = new ProgressDialog(this);
         progressDoalog.setTitle("Loading ranking");
@@ -60,22 +58,18 @@ public class Activity_ranking extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         //progressDoalog.dismiss();
 
-
     }
 
 
     private void setupViewPager(ViewPager viewPager) {
 
-
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new Top10(), "Top10");
-        adapter.addFragment(new Top100(), "Top100");
-        adapter.addFragment(new TopAleatorio(), "Aleatorio");
-
+        adapter.addFragment(new FTopDiez(), "Top10");
+        adapter.addFragment(new FTopCien(), "Top100");
+        adapter.addFragment(new FTopAleatorio(), "Aleatorio");
 
         viewPager.setAdapter(adapter);
-
     }
 
 
@@ -107,5 +101,6 @@ public class Activity_ranking extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
 }
 

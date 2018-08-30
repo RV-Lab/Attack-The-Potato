@@ -1,7 +1,6 @@
 package com.potato.rv.rvpotato;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,11 +10,9 @@ import android.media.SoundPool;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,14 +23,10 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class patata extends AppCompatActivity {
 
@@ -212,7 +205,12 @@ public class patata extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        modificar_record(nombre_record.getText().toString());
+                        ConexionesBD.actualizarRanking(nombre_record.getText().toString(), top, cronometro.getText().toString(), getApplicationContext());
+
+//                        if(ConexionesBD.actualizarRanking(nombre_record.getText().toString(), top, cronometro.getText().toString(), getApplicationContext())){
+//                            Toast toast = Toast.makeText(getApplicationContext(), "YOU ARE ON THE TOP!!!", Toast.LENGTH_LONG);
+//                            toast.show();
+//                        }
                         ranking.setVisibility(View.VISIBLE);
                         retry.setVisibility(View.VISIBLE);
                         alert.dismiss();
@@ -249,7 +247,7 @@ public class patata extends AppCompatActivity {
 
     }
 */
-
+/*
     public void modificar_record(final String nombre){
 
         mibd = FirebaseDatabase.getInstance().getReference();
@@ -319,6 +317,7 @@ public class patata extends AppCompatActivity {
         mibd.addValueEventListener(eventListener);
         //mibd.onDisconnect();
     }
+*/
 
     //botones
     public void pegar_patata(View v) {

@@ -1,9 +1,6 @@
 package com.potato.rv.rvpotato;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,13 +11,9 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.AbsoluteLayout;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,16 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import static io.fabric.sdk.android.services.common.ResponseParser.parse;
 
 public class Juego_Aleatorio extends AppCompatActivity {
     TextView contador_clicks;
@@ -135,7 +123,7 @@ public class Juego_Aleatorio extends AppCompatActivity {
 // Aplicamos la fuente
         vistaFuente.setTypeface(fuente);
 
-        maximo = 16;
+        maximo = 5;
 
         top = "TopAleatorio";
 
@@ -247,7 +235,12 @@ public class Juego_Aleatorio extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        modificar_record(nombre_record.getText().toString());
+                        //modificar_record(nombre_record.getText().toString());
+                        ConexionesBD.actualizarRanking(nombre_record.getText().toString(), top, cronometro.getText().toString(), getApplicationContext());
+//                        if(ConexionesBD.actualizarRanking(nombre_record.getText().toString(), top, cronometro.getText().toString(), getApplicationContext())){
+//                            Toast toast = Toast.makeText(getApplicationContext(), "YOU ARE ON THE TOP!!!", Toast.LENGTH_LONG);
+//                            toast.show();
+//                        }
                         patata_aleatorio.setVisibility(View.INVISIBLE);
                         ranking.setVisibility(View.VISIBLE);
                         retry.setVisibility(View.VISIBLE);
@@ -259,75 +252,75 @@ public class Juego_Aleatorio extends AppCompatActivity {
     }
 
 
-    public void modificar_record(final String nombre){
-
-        mibd = FirebaseDatabase.getInstance().getReference();
-        jugadores = new ArrayList<Jugador>();
-        eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //limpio el arraylist de jugadores, si no se repite la lista
-                jugadores.clear();
-
-
-                for(DataSnapshot jugSnap : dataSnapshot.child(top).getChildren()) {
-                    Jugador jugador = jugSnap.getValue(Jugador.class);
-                    jugadores.add(jugador);
-                }
-
-
-                String tstring = cronometro.getText().toString();
-                String[] parts = tstring.split(":");
-                String part1 = parts[0];
-                String part2 = parts[1];
-                String part3 = parts[2];
-
-                int min = Integer.parseInt(part1);
-                int seg = Integer.parseInt(part2);
-                int mil = Integer.parseInt(part3);
-
-                int tiempoTotal = min*60*1000 + seg*1000 + mil;
-
-                //saco la posicion del arraylist del mas lento
-                int mayor=0;
-                int pos=0;
-                for(int i=0; i<jugadores.size(); i++){
-                    if(jugadores.get(i).getTiempo() > mayor){
-                        mayor = jugadores.get(i).getTiempo();
-                        pos = i;
-                    }
-                }
-
-                if( jugadores.get(pos).getTiempo() > tiempoTotal && encontrado==true){
-                    String num= ""+(pos+1);
-                    Jugador j = new Jugador(nombre,tiempoTotal);
-                    dataSnapshot.child(top).getRef().child("" + num).setValue(j);
-                    encontrado = false;
-                    entra_top=true;
-                }
-
-                if (entra_top){
-                    Toast toast = Toast.makeText(getApplicationContext(), "YOU ARE ON THE TOP!!!", Toast.LENGTH_LONG);
-                    toast.show();
-                    entra_top=false;
-                }
-
-                //metodo buscar pos mas lento, pos mas lento = tiempo nuevo record
-
-                Log.e("", "onDataChange:" + dataSnapshot.getValue().toString());
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e("", "Error!", databaseError.toException());
-            }
-
-        };
-        mibd.addValueEventListener(eventListener);
-        //mibd.onDisconnect();
-    }
+//    public void modificar_record(final String nombre){
+//
+//        mibd = FirebaseDatabase.getInstance().getReference();
+//        jugadores = new ArrayList<Jugador>();
+//        eventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                //limpio el arraylist de jugadores, si no se repite la lista
+//                jugadores.clear();
+//
+//
+//                for(DataSnapshot jugSnap : dataSnapshot.child(top).getChildren()) {
+//                    Jugador jugador = jugSnap.getValue(Jugador.class);
+//                    jugadores.add(jugador);
+//                }
+//
+//
+//                String tstring = cronometro.getText().toString();
+//                String[] parts = tstring.split(":");
+//                String part1 = parts[0];
+//                String part2 = parts[1];
+//                String part3 = parts[2];
+//
+//                int min = Integer.parseInt(part1);
+//                int seg = Integer.parseInt(part2);
+//                int mil = Integer.parseInt(part3);
+//
+//                int tiempoTotal = min*60*1000 + seg*1000 + mil;
+//
+//                //saco la posicion del arraylist del mas lento
+//                int mayor=0;
+//                int pos=0;
+//                for(int i=0; i<jugadores.size(); i++){
+//                    if(jugadores.get(i).getTiempo() > mayor){
+//                        mayor = jugadores.get(i).getTiempo();
+//                        pos = i;
+//                    }
+//                }
+//
+//                if( jugadores.get(pos).getTiempo() > tiempoTotal && encontrado==true){
+//                    String num= ""+(pos+1);
+//                    Jugador j = new Jugador(nombre,tiempoTotal);
+//                    dataSnapshot.child(top).getRef().child("" + num).setValue(j);
+//                    encontrado = false;
+//                    entra_top=true;
+//                }
+//
+//                if (entra_top){
+//                    Toast toast = Toast.makeText(getApplicationContext(), "YOU ARE ON THE TOP!!!", Toast.LENGTH_LONG);
+//                    toast.show();
+//                    entra_top=false;
+//                }
+//
+//                //metodo buscar pos mas lento, pos mas lento = tiempo nuevo record
+//
+//                Log.e("", "onDataChange:" + dataSnapshot.getValue().toString());
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.e("", "Error!", databaseError.toException());
+//            }
+//
+//        };
+//        mibd.addValueEventListener(eventListener);
+//        //mibd.onDisconnect();
+//    }
 
     //botones
     public void pegar_patata(View v) {
