@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ public class FTopCien extends Fragment {
 
     private View v;
     private OnFragmentInteractionListener mListener;
+    private int i=0;
 
     public FTopCien() {
         // Required empty public constructor
@@ -41,6 +43,22 @@ public class FTopCien extends Fragment {
         v = inflater.inflate(R.layout.fragment_top100, container, false);
         cargarDatos();
         initPubli();
+
+        FloatingActionButton bftd = (FloatingActionButton) v.findViewById(R.id.bft100);
+
+        bftd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                i++;
+                if(i%2 != 0){
+                    cargarDatosPermanentes();
+                }
+                else
+                    cargarDatos();
+
+            }
+        });
+
         return v;
     }
 
@@ -96,6 +114,15 @@ public class FTopCien extends Fragment {
             //ConexionesBD.accesoVR(lista_top100, 2);
             //UNICA QUE FUNCIONA
             ConexionesBD.visualizarRankingTotal(lista_top100, "Top100");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarDatosPermanentes() {
+        ListView lista_top100 = v.findViewById(R.id.lista_top100);
+        try {
+            ConexionesBD.visualizarRankingPermanente(lista_top100, "Top100P");
         } catch (Exception e) {
             e.printStackTrace();
         }

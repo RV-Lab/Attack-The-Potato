@@ -205,6 +205,9 @@ public class patata extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(nombre_record.getText().toString().isEmpty()){
+                            nombre_record.setText("Unknown");
+                        }
                         ConexionesBD.actualizarRanking(nombre_record.getText().toString(), top, cronometro.getText().toString(), getApplicationContext());
 
 //                        if(ConexionesBD.actualizarRanking(nombre_record.getText().toString(), top, cronometro.getText().toString(), getApplicationContext())){

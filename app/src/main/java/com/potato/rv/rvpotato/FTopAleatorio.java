@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ public class FTopAleatorio extends Fragment {
 
     private View v;
     private OnFragmentInteractionListener mListener;
+    private int i=0;
 
     public FTopAleatorio() {
         // Required empty public constructor
@@ -41,6 +43,22 @@ public class FTopAleatorio extends Fragment {
         v = inflater.inflate(R.layout.fragment_top_aleatorio, container, false);
         cargarDatos();
         initPubli();
+
+        FloatingActionButton bftd = (FloatingActionButton) v.findViewById(R.id.bfta);
+
+        bftd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                i++;
+                if(i%2 != 0){
+                    cargarDatosPermanentes();
+                }
+                else
+                    cargarDatos();
+
+            }
+        });
+
         return v;
     }
 
@@ -96,6 +114,15 @@ public class FTopAleatorio extends Fragment {
             //ConexionesBD.accesoVR(lista_topaleatorio, 3);
             //UNICA QUE FUNCIONA
             ConexionesBD.visualizarRankingTotal(lista_topaleatorio, "Top");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarDatosPermanentes() {
+        ListView lista_topaleatorio = v.findViewById(R.id.lista_topaleatorio);
+        try {
+            ConexionesBD.visualizarRankingPermanente(lista_topaleatorio, "TopAleatorioP");
         } catch (Exception e) {
             e.printStackTrace();
         }

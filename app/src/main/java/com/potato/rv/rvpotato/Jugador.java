@@ -2,6 +2,9 @@ package com.potato.rv.rvpotato;
 
 import android.support.annotation.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Jugador implements Comparable {
 
     //@SerializedName("nombre")
@@ -54,5 +57,13 @@ public class Jugador implements Comparable {
                 "nombre='" + nombre + '\'' +
                 ", tiempo=" + tiempo +
                 '}';
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("nombre", nombre);
+        result.put("tiempo", tiempo);
+
+        return result;
     }
 }

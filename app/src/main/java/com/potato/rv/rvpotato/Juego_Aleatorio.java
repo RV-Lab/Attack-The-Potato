@@ -236,6 +236,9 @@ public class Juego_Aleatorio extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         //modificar_record(nombre_record.getText().toString());
+                        if(nombre_record.getText().toString().isEmpty()){
+                            nombre_record.setText("Unknown");
+                        }
                         ConexionesBD.actualizarRanking(nombre_record.getText().toString(), top, cronometro.getText().toString(), getApplicationContext());
 //                        if(ConexionesBD.actualizarRanking(nombre_record.getText().toString(), top, cronometro.getText().toString(), getApplicationContext())){
 //                            Toast toast = Toast.makeText(getApplicationContext(), "YOU ARE ON THE TOP!!!", Toast.LENGTH_LONG);

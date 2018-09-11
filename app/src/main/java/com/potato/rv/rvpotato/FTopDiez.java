@@ -2,6 +2,7 @@ package com.potato.rv.rvpotato;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ public class FTopDiez extends Fragment {
 
     private View v;
     private OnFragmentInteractionListener mListener;
+    private int i=0;
 
     public FTopDiez() {
         // Required empty public constructor
@@ -39,6 +41,22 @@ public class FTopDiez extends Fragment {
         v = inflater.inflate(R.layout.fragment_top10, container, false);
         cargarDatos();
         initPubli();
+
+        FloatingActionButton bftd = (FloatingActionButton) v.findViewById(R.id.bft10);
+
+        bftd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                i++;
+                if(i%2 != 0){
+                    cargarDatosPermanentes();
+                }
+                else
+                    cargarDatos();
+
+            }
+        });
+
         return v;
     }
 
@@ -93,6 +111,16 @@ public class FTopDiez extends Fragment {
             //ConexionesBD.accesoVR(lista_top10, 1);
             //UNICA QUE FUNCIONA
             ConexionesBD.visualizarRankingTotal(lista_top10, "Top10");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void cargarDatosPermanentes() {
+        ListView lista_top10 = v.findViewById(R.id.lista_top10);
+        try {
+            ConexionesBD.visualizarRankingPermanente(lista_top10, "Top10P");
         } catch (Exception e) {
             e.printStackTrace();
         }

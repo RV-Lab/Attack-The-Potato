@@ -6,14 +6,19 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConexionesBD {
     private static final String TAGLOG = "firebase-db";
@@ -24,6 +29,9 @@ public class ConexionesBD {
     private static boolean entra_top = false;
     private static String top = "Top10";
     public static int n = 10;
+    private static boolean cambiado = false;
+    private static boolean cambiado1 = false;
+    private static boolean cambiado2 = false;
 
 //      UNICA FORMA QUE FUNCIONA, PERO NO ME GUSTA NADA
     public static void visualizarRankingTotal(final ListView listView, final String acceso){
@@ -180,6 +188,143 @@ public class ConexionesBD {
         };
         mibd.addValueEventListener(eventListener);
     }
+
+    public static void visualizarRankingPermanente(final ListView listView, final String acceso){
+        mibd = FirebaseDatabase.getInstance().getReference();
+        jugadores = new ArrayList<Jugador>();
+
+        eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jugadores.clear();
+                top = "TopSemanal";
+                for (DataSnapshot jugSanp : dataSnapshot.child(top).child(acceso).getChildren()){
+                    Jugador jugador = jugSanp.getValue(Jugador.class);
+                    jugadores.add(jugador);
+                }
+                Collections.sort(jugadores);
+                Miadapter miadapter = new Miadapter(jugadores);
+                listView.setAdapter(miadapter);
+
+                Log.e(TAGLOG, "onDataChange:" + dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAGLOG, "Error!", databaseError.toException());
+            }
+        };
+        mibd.addValueEventListener(eventListener);
+    }
+
+    // FUNCIONA, DISCUTIR COMO USARLA
+//    public static void actualizarRankingPermanent(){
+//        mibd = FirebaseDatabase.getInstance().getReference();
+//        jugadores = new ArrayList<Jugador>();
+//
+//        eventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                jugadores.clear();
+//                top = "Top10";
+//                for (DataSnapshot jugSanp : dataSnapshot.child(top).getChildren()){
+//                    Jugador jugador = jugSanp.getValue(Jugador.class);
+//                    jugadores.add(jugador);
+//                }
+//
+//                if(!cambiado){
+//                    Collections.sort(jugadores);
+//                    String key = mibd.child("TopSemanal").child("Top10P").push().getKey();
+//                    Jugador jug = new Jugador();
+//                    jug = jugadores.get(0);
+//                    Map<String, Object> jugValues = jug.toMap();
+//                    Map<String, Object> childUpdates = new HashMap<>();
+//                    childUpdates.put("/TopSemanal/" + "Top10P" + "/" + key, jugValues);
+//                    mibd.updateChildren(childUpdates);
+//                    cambiado = true;
+//
+//                    for (int i = 0; i<jugadores.size(); i++){
+//                        String num= ""+(i+1);
+//                        Jugador j = new Jugador("Unknown",999999);
+//                        dataSnapshot.child(top).getRef().child("" + num).setValue(j);
+//                    }
+//                }
+//
+//                jugadores.clear();
+//                top = "Top100";
+//                for (DataSnapshot jugSanp : dataSnapshot.child(top).getChildren()){
+//                    Jugador jugador = jugSanp.getValue(Jugador.class);
+//                    jugadores.add(jugador);
+//                }
+//
+//                if(!cambiado1){
+//                    Collections.sort(jugadores);
+//                    String key = mibd.child("TopSemanal").child("Top100P").push().getKey();
+//                    Jugador jug = new Jugador();
+//                    jug = jugadores.get(0);
+//                    Map<String, Object> jugValues = jug.toMap();
+//                    Map<String, Object> childUpdates = new HashMap<>();
+//                    childUpdates.put("/TopSemanal/" + "Top100P" + "/" + key, jugValues);
+//                    mibd.updateChildren(childUpdates);
+//                    cambiado1 = true;
+//
+//                    for (int i = 0; i<jugadores.size(); i++){
+//                        String num= ""+(i+1);
+//                        Jugador j = new Jugador("Unknown",999999);
+//                        dataSnapshot.child(top).getRef().child("" + num).setValue(j);
+//                    }
+//                }
+//
+//
+//                jugadores.clear();
+//                top = "TopAleatorio";
+//                for (DataSnapshot jugSanp : dataSnapshot.child(top).getChildren()){
+//                    Jugador jugador = jugSanp.getValue(Jugador.class);
+//                    jugadores.add(jugador);
+//                }
+//
+//                if(!cambiado1){
+//                    Collections.sort(jugadores);
+//                    String key = mibd.child("TopSemanal").child("TopAleatorioP").push().getKey();
+//                    Jugador jug = new Jugador();
+//                    jug = jugadores.get(0);
+//                    Map<String, Object> jugValues = jug.toMap();
+//                    Map<String, Object> childUpdates = new HashMap<>();
+//                    childUpdates.put("/TopSemanal/" + "TopAleatorioP" + "/" + key, jugValues);
+//                    mibd.updateChildren(childUpdates);
+//                    cambiado1 = true;
+//
+//                    for (int i = 0; i<jugadores.size(); i++){
+//                        String num= ""+(i+1);
+//                        Jugador j = new Jugador("Unknown",999999);
+//                        dataSnapshot.child(top).getRef().child("" + num).setValue(j);
+//                    }
+//
+//                }
+//
+//                Log.e(TAGLOG, "onDataChange:" + dataSnapshot.getValue().toString());
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e(TAGLOG, "Error!", databaseError.toException());
+//            }
+//        };
+//        mibd.addValueEventListener(eventListener);
+//    }
+
+    public static String estimarClick() {
+        final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings remoteConfigSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(true)
+                .build();
+        remoteConfig.setConfigSettings(remoteConfigSettings);
+        String dia = remoteConfig.getString("dia_reset");
+        String mes = remoteConfig.getString("mes_reset");
+        return (dia + "/" + mes);
+    }
+
+
 
 //
 //    NO FUNCIONA!!!!
