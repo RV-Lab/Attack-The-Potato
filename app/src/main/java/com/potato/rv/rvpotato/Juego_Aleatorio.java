@@ -33,7 +33,7 @@ public class Juego_Aleatorio extends AppCompatActivity {
     int contador=0;
     boolean encontrado = true;
     private Chronometer cronometro;
-    private int maximo;
+    private int maximo = 5;
     private boolean entra_top = false;
     private String top="";
     private ImageButton retry;
@@ -123,7 +123,7 @@ public class Juego_Aleatorio extends AppCompatActivity {
 // Aplicamos la fuente
         vistaFuente.setTypeface(fuente);
 
-        maximo = 5;
+        //maximo = 5; lo subo arriba
 
         top = "TopAleatorio";
 

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -313,15 +315,21 @@ public class ConexionesBD {
 //        mibd.addValueEventListener(eventListener);
 //    }
 
+
     public static String estimarClick() {
+
         final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings remoteConfigSettings = new FirebaseRemoteConfigSettings.Builder()
                 .setDeveloperModeEnabled(true)
                 .build();
         remoteConfig.setConfigSettings(remoteConfigSettings);
-        String dia = remoteConfig.getString("dia_reset");
-        String mes = remoteConfig.getString("mes_reset");
-        return (dia + "/" + mes);
+        //remoteConfig.fetch();
+        //remoteConfig.activateFetched();
+        //remoteConfig.setDefaults(R.xml.remote);
+        double dia = remoteConfig.getDouble("dia_reset");
+        double mes = remoteConfig.getDouble("mes_reset");
+        return ("" + dia + "/" + mes);
+
     }
 
 

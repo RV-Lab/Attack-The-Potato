@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>dia_reset</key>
+        <value>11.0</value>
+    </entry>
+    <entry>
+        <key>mes_reset</key>
+        <value>9.0</value>
+    </entry>
+</defaultsMap><!-- END xml_defaults -->
